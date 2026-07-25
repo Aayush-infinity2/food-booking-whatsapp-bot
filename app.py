@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, redirect, url_for, session
 from dotenv import load_dotenv
 import os
 import hashlib
@@ -10,6 +10,7 @@ from routes.order import orders_bp
 from routes.student import student_bp
 from utils.badge import status_badge
 from utils.formatter import *
+
 # -----------------------------
 # Load Environment Variables
 # -----------------------------
@@ -21,27 +22,30 @@ NGROK_DOMAIN = os.getenv("NGROK_DOMAIN")
 
 
 # -----------------------------
-# Flask App
+# Flask App Initialization
 # -----------------------------
 app = Flask(__name__)
 app.jinja_env.globals.update(
-
     status_badge=status_badge,
-
     format_currency=format_currency,
-
     format_datetime=format_datetime,
-
     mask_phone=mask_phone
 )
+
 app.register_blueprint(orders_bp)
 app.register_blueprint(admin_bp)
 app.register_blueprint(student_bp)
 app.secret_key = os.getenv("SECRET_KEY") or "food_booking_secret_key_default_2026"
 
+
+# -----------------------------------
+# Root Route Redirect
+# -----------------------------------
 @app.route("/")
 def home():
-    return "WhatsApp Bot Running 🚀"
+    if session.get("admin_logged_in"):
+        return redirect(url_for("admin.dashboard"))
+    return redirect(url_for("admin.login"))
 
 
 # -----------------------------------
@@ -69,7 +73,6 @@ def verify_webhook():
 # -----------------------------------
 @app.route("/webhook", methods=["POST"])
 def webhook():
-
     signature = request.headers.get("X-Hub-Signature-256")
     app_secret = os.getenv("APP_SECRET")
     if app_secret:
@@ -101,9 +104,6 @@ def webhook():
 
 
 if __name__ == "__main__":
-    # WhatsApp Cloud API must reach this local server through a public HTTPS URL.
-    # Start ngrok automatically when a token is configured; set RUN_NGROK=false
-    # only when running behind another public reverse proxy.
     if NGROK_AUTH_TOKEN and os.getenv("RUN_NGROK", "true").lower() == "true":
         try:
             from pyngrok import ngrok
