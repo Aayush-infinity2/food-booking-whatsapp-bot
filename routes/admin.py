@@ -59,14 +59,21 @@ def dashboard():
     if not session.get("admin_logged_in"):
         return redirect(url_for("admin.login"))
 
-    orders = OrderService.get_all_orders()
-    stats = OrderService.get_dashboard_stats()
+    try:
+        orders = OrderService.get_all_orders()
+        stats = OrderService.get_dashboard_stats()
+    except Exception as e:
+        print(f"Error loading dashboard data: {e}")
+        orders = []
+        stats = {"total_orders": 0, "pending_orders": 0, "preparing_orders": 0, "today_revenue": 0}
+        flash("Could not connect to MySQL database. Please verify your Aiven credentials on Render or run python init_db.py.", "warning")
 
     return render_template(
         "admin/dashboard.html",
         orders=orders,
         stats=stats
     )
+
 
 
 @admin_bp.route("/analytics")

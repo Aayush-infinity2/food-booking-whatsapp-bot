@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, redirect, request, url_for, flash,
 
 from services.order_service import OrderService
 
+from services.order_service import OrderService
+
 orders_bp = Blueprint(
     "orders",
     __name__,
@@ -13,11 +15,17 @@ def index():
     if not session.get("admin_logged_in"):
         return redirect(url_for("admin.login"))
 
-    orders = OrderService.get_all_orders()
+    try:
+        orders = OrderService.get_all_orders()
+        restaurants = OrderService.get_all_restaurants()
+        stats = OrderService.get_dashboard_stats()
+    except Exception as e:
+        print(f"Error loading orders data: {e}")
+        orders = []
+        restaurants = []
+        stats = {"total_orders": 0, "pending_orders": 0, "preparing_orders": 0, "today_revenue": 0}
+        flash("Could not connect to MySQL database. Please verify your Aiven credentials on Render or run python init_db.py.", "warning")
 
-    restaurants = OrderService.get_all_restaurants()
-
-    stats = OrderService.get_dashboard_stats()
     return render_template(
         "admin/orders.html",
         orders=orders,
@@ -29,7 +37,6 @@ def update_status(order_id):
 
     if not session.get("admin_logged_in"):
         return redirect(url_for("admin.login"))
-
     status = request.form.get("status")
 
     if OrderService.update_order_status(order_id, status):
