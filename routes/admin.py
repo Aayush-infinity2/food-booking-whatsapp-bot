@@ -81,10 +81,18 @@ def analytics():
     if not session.get("admin_logged_in"):
         return redirect(url_for("admin.login"))
 
-    stats = OrderService.get_dashboard_stats()
-    orders_chart = get_orders_last_7_days()
-    status_chart = get_order_status_distribution()
-    top_items = get_top_selling_items()
+    try:
+        stats = OrderService.get_dashboard_stats()
+        orders_chart = get_orders_last_7_days()
+        status_chart = get_order_status_distribution()
+        top_items = get_top_selling_items()
+    except Exception as e:
+        print(f"Error loading analytics data: {e}")
+        stats = {"total_orders": 0, "pending_orders": 0, "preparing_orders": 0, "today_revenue": 0}
+        orders_chart = []
+        status_chart = []
+        top_items = []
+        flash("Could not connect to MySQL database. Please verify your Aiven credentials on Render or run python init_db.py.", "warning")
 
     return render_template(
         "admin/analytics.html",
@@ -109,8 +117,15 @@ def students():
     if not session.get("admin_logged_in"):
         return redirect(url_for("admin.login"))
 
-    students_list = StudentRepository.get_all()
+    try:
+        students_list = StudentRepository.get_all()
+    except Exception as e:
+        print(f"Error loading students directory: {e}")
+        students_list = []
+        flash("Could not connect to MySQL database. Please verify your Aiven credentials on Render or run python init_db.py.", "warning")
+
     return render_template("admin/students.html", students=students_list)
+
 
 
 @admin_bp.route("/update-status/<int:order_id>", methods=["POST"])

@@ -44,6 +44,10 @@ def main():
         cursor.close()
         conn.close()
 
+        print("\n🎉 SUCCESS! Connected to Aiven and verified database schema!")
+        print("Your database tables ('students' and 'orders') are 100% installed and ready for production!")
+
+
         print("\n✅ SUCCESS: All database tables ('students', 'orders') created successfully!")
 
     except Exception as e:
