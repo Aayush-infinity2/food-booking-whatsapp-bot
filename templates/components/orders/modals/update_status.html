@@ -1,0 +1,29 @@
+<div class="modal fade" id="statusModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content modal-dark-glass" method="POST" id="updateStatusForm"
+              data-action-template="{{ url_for('orders.update_status', order_id=0) }}">
+            <div class="modal-header border-bottom border-secondary border-opacity-25">
+                <h5 class="modal-title fw-bold text-white d-flex align-items-center gap-2">
+                    <i class="bi bi-pencil-square text-warning"></i>
+                    <span>Update Order Status</span>
+                </h5>
+                <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body py-4">
+                <input type="hidden" id="statusOrderId">
+                <label class="form-label text-muted small fw-bold text-uppercase mb-2">Select New Status</label>
+                <select class="form-select form-select-dark py-2" id="newStatus" name="status">
+                    <option value="Pending">Pending</option>
+                    <option value="Preparing">Preparing</option>
+                    <option value="Ready">Ready</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+            <div class="modal-footer border-top border-secondary border-opacity-25">
+                <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-warning text-dark fw-bold px-4" type="submit">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>

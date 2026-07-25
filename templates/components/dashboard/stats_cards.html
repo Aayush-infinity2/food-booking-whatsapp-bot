@@ -1,0 +1,63 @@
+<div class="row g-4 mb-4">
+
+    <!-- Total Orders -->
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="glass-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Total Orders</div>
+                    <div class="stat-value">{{ stats.total_orders }}</div>
+                </div>
+                <div class="stat-icon-badge indigo">
+                    <i class="bi bi-bag-check-fill"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Orders -->
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="glass-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Pending Orders</div>
+                    <div class="stat-value text-warning">{{ stats.pending_orders }}</div>
+                </div>
+                <div class="stat-icon-badge amber">
+                    <i class="bi bi-hourglass-split"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preparing Orders -->
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="glass-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Preparing</div>
+                    <div class="stat-value text-info">{{ stats.preparing_orders }}</div>
+                </div>
+                <div class="stat-icon-badge cyan">
+                    <i class="bi bi-fire"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Today Revenue -->
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="glass-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Today's Revenue</div>
+                    <div class="stat-value text-success">₹{{ stats.today_revenue }}</div>
+                </div>
+                <div class="stat-icon-badge emerald">
+                    <i class="bi bi-currency-rupee"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

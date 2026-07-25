@@ -1,0 +1,57 @@
+<div class="glass-card mb-4">
+    <div class="row g-3 align-items-center">
+
+        <!-- Search -->
+        <div class="col-md-4">
+            <div class="position-relative">
+                <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="form-control form-control-dark ps-5"
+                    placeholder="Search orders, items, phone..."
+                >
+            </div>
+        </div>
+
+        <!-- Status Filter -->
+        <div class="col-md-3">
+            <select
+                id="statusFilter"
+                class="form-select form-select-dark"
+            >
+                <option value="">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Preparing">Preparing</option>
+                <option value="Ready">Ready</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+        </div>
+
+        <!-- Restaurant Filter -->
+        <div class="col-md-3">
+            <select
+                id="restaurantFilter"
+                class="form-select form-select-dark"
+            >
+                <option value="">All Restaurants</option>
+                {% for restaurant in restaurants %}
+                    <option value="{{ restaurant }}">{{ restaurant }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Reset Button -->
+        <div class="col-md-2">
+            <button
+                class="btn btn-outline-warning w-100 fw-bold d-flex align-items-center justify-content-center gap-2"
+                id="resetFilters"
+            >
+                <i class="bi bi-arrow-counterclockwise"></i>
+                <span>Reset</span>
+            </button>
+        </div>
+
+    </div>
+</div>

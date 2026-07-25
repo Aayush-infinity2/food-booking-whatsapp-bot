@@ -1,0 +1,65 @@
+<div class="sidebar">
+
+    <!-- Logo -->
+    <div class="logo">
+        <div class="logo-icon">
+            <i class="bi bi-shop"></i>
+        </div>
+        <div class="logo-text">LPU <span>Food</span></div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <!-- Navigation List -->
+    <ul class="nav-list">
+
+        <li class="nav-item">
+            <a href="{{ url_for('admin.dashboard') }}"
+               class="nav-link {% if request.endpoint == 'admin.dashboard' %}active{% endif %}">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ url_for('orders.index') }}"
+               class="nav-link {% if request.endpoint == 'orders.index' %}active{% endif %}">
+                <i class="bi bi-bag-check-fill"></i>
+                <span>Orders</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ url_for('admin.menu') }}"
+               class="nav-link {% if request.endpoint == 'admin.menu' %}active{% endif %}">
+                <i class="bi bi-cup-hot-fill"></i>
+                <span>Menu</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ url_for('admin.students') }}"
+               class="nav-link {% if request.endpoint == 'admin.students' %}active{% endif %}">
+                <i class="bi bi-people-fill"></i>
+                <span>Students</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ url_for('admin.analytics') }}"
+               class="nav-link {% if request.endpoint == 'admin.analytics' %}active{% endif %}">
+                <i class="bi bi-bar-chart-line-fill"></i>
+                <span>Analytics</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-4">
+            <a href="{{ url_for('admin.logout') }}" class="nav-link logout-link">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>

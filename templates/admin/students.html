@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Student Directory | LPU Food Admin{% endblock %}
+
+{% block page_title %}
+<div class="d-flex align-items-center gap-3">
+    <i class="bi bi-people-fill text-warning"></i>
+    <span>Student Directory</span>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-extrabold text-white mb-1">🎓 Registered Students Directory</h2>
+        <p class="text-muted mb-0">List of student profiles registered for online food booking.</p>
+    </div>
+</div>
+
+<!-- Student Table -->
+<div class="glass-card mb-4">
+
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h5 class="fw-bold text-white mb-0 d-flex align-items-center gap-2">
+            <i class="bi bi-person-badge-fill text-warning"></i>
+            <span>Registered Users ({{ students|length }})</span>
+        </h5>
+    </div>
+
+    <div class="table-responsive">
+        <table id="studentsTable" class="table table-glass align-middle w-100">
+            <thead>
+                <tr>
+                    <th>Registration No</th>
+                    <th>Full Name</th>
+                    <th>WhatsApp Phone</th>
+                    <th>Registered On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td class="fw-bold text-warning">{{ student.registration_number }}</td>
+                    <td class="fw-semibold text-white">{{ student.full_name }}</td>
+                    <td>{{ mask_phone(student.phone) }}</td>
+                    <td class="text-muted small">{{ format_datetime(student.created_at) }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted py-4">No student profiles registered yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function(){
+        $('#studentsTable').DataTable({
+            responsive: true,
+            pageLength: 10,
+            lengthMenu: [10, 25, 50],
+            order: [[3, 'desc']]
+        });
+    });
+</script>
+{% endblock %}

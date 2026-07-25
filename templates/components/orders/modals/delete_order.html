@@ -1,0 +1,21 @@
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content modal-dark-glass" method="POST" id="deleteOrderForm"
+              data-action-template="{{ url_for('orders.delete', order_id=0) }}">
+            <div class="modal-header border-bottom border-secondary border-opacity-25">
+                <h5 class="modal-title fw-bold text-white d-flex align-items-center gap-2">
+                    <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                    <span>Confirm Delete Order</span>
+                </h5>
+                <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body py-4 text-light">
+                Are you sure you want to delete this order? This action cannot be undone.
+            </div>
+            <div class="modal-footer border-top border-secondary border-opacity-25">
+                <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-danger fw-bold px-4" type="submit">Delete Order</button>
+            </div>
+        </form>
+    </div>
+</div>

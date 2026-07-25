@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | LPU Food{% endblock %}
+
+{% block page_title %}
+<div class="d-flex align-items-center gap-3">
+    <i class="bi bi-speedometer2 text-warning"></i>
+    <span>Restaurant Activity & Overview</span>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<!-- Header Greeting -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-extrabold text-white mb-1">🍔 Live Restaurant Dashboard</h2>
+        <p class="text-muted mb-0">Real-time order tracking and active customer requests.</p>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+{% include "components/dashboard/stats_cards.html" %}
+
+<!-- Recent Orders Data Table -->
+{% include "components/dashboard/recent_orders.html" %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function(){
+        $('#ordersTable').DataTable({
+            responsive: true,
+            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50],
+            order: [[0, 'desc']]
+        });
+    });
+</script>
+{% endblock %}

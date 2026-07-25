@@ -1,0 +1,80 @@
+<div class="glass-card mb-4">
+
+    <div class="table-responsive">
+        <table id="ordersTable" class="table table-glass align-middle w-100">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Phone</th>
+                    <th>Restaurant</th>
+                    <th>Item Name</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td class="fw-bold text-warning">#{{ order.id }}</td>
+                    <td>{{ mask_phone(order.customer_phone) }}</td>
+                    <td class="fw-semibold text-white">{{ order.restaurant }}</td>
+                    <td class="text-white">
+                        {{ order.item }}
+                        {% if order.variant %}
+                            <span class="text-muted small">({{ order.variant }})</span>
+                        {% endif %}
+                    </td>
+                    <td class="fw-bold">{{ order.quantity }}</td>
+                    <td class="fw-bold text-success">{{ format_currency(order.total) }}</td>
+                    <td>
+                        {% if order.status == "Pending" %}
+                            <span class="badge-status pending">
+                                <i class="bi bi-hourglass-split"></i> Pending
+                            </span>
+                        {% elif order.status == "Preparing" %}
+                            <span class="badge-status preparing">
+                                <i class="bi bi-fire"></i> Preparing
+                            </span>
+                        {% elif order.status == "Ready" %}
+                            <span class="badge-status ready">
+                                <i class="bi bi-bag-check-fill"></i> Ready
+                            </span>
+                        {% elif order.status == "Completed" %}
+                            <span class="badge-status completed">
+                                <i class="bi bi-check-circle-fill"></i> Completed
+                            </span>
+                        {% else %}
+                            <span class="badge-status cancelled">
+                                <i class="bi bi-x-circle-fill"></i> Cancelled
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <button
+                                class="btn btn-sm btn-outline-warning update-btn d-flex align-items-center gap-1"
+                                data-id="{{ order.id }}"
+                                data-status="{{ order.status }}"
+                            >
+                                <i class="bi bi-pencil-square"></i>
+                                <span>Edit</span>
+                            </button>
+
+                            <button
+                                class="btn btn-sm btn-outline-danger delete-btn d-flex align-items-center gap-1"
+                                data-id="{{ order.id }}"
+                            >
+                                <i class="bi bi-trash"></i>
+                                <span>Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>

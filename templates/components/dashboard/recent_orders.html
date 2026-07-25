@@ -1,0 +1,84 @@
+<div class="glass-card mb-4">
+
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h5 class="fw-bold mb-0 text-white d-flex align-items-center gap-2">
+            <i class="bi bi-table text-warning"></i>
+            <span>Recent Campus Orders</span>
+        </h5>
+        <span class="text-muted small">Live updates from WhatsApp & Web Portal</span>
+    </div>
+
+    <div class="table-responsive">
+        <table id="ordersTable" class="table table-glass align-middle w-100">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Phone</th>
+                    <th>Restaurant</th>
+                    <th>Item Name</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Update Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td class="fw-bold text-warning">#{{ order.id }}</td>
+                    <td>{{ mask_phone(order.customer_phone) }}</td>
+                    <td class="fw-semibold">{{ order.restaurant }}</td>
+                    <td>
+                        {{ order.item }}
+                        {% if order.variant %}
+                            <span class="text-muted small">({{ order.variant }})</span>
+                        {% endif %}
+                    </td>
+                    <td class="fw-bold">{{ order.quantity }}</td>
+                    <td class="fw-bold text-success">₹{{ order.total }}</td>
+                    <td>
+                        {% if order.status == "Pending" %}
+                            <span class="badge-status pending">
+                                <i class="bi bi-hourglass-split"></i> Pending
+                            </span>
+                        {% elif order.status == "Preparing" %}
+                            <span class="badge-status preparing">
+                                <i class="bi bi-fire"></i> Preparing
+                            </span>
+                        {% elif order.status == "Ready" %}
+                            <span class="badge-status ready">
+                                <i class="bi bi-bag-check-fill"></i> Ready
+                            </span>
+                        {% elif order.status == "Completed" %}
+                            <span class="badge-status completed">
+                                <i class="bi bi-check-circle-fill"></i> Completed
+                            </span>
+                        {% else %}
+                            <span class="badge-status cancelled">
+                                <i class="bi bi-x-circle-fill"></i> Cancelled
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form action="{{ url_for('admin.update_status', order_id=order.id) }}" method="POST" class="d-inline-block">
+                            <div class="input-group input-group-sm">
+                                <select name="status" class="form-select form-select-dark">
+                                    {% for status in ["Pending", "Preparing", "Ready", "Completed", "Cancelled"] %}
+                                        <option value="{{ status }}" {% if order.status == status %}selected{% endif %}>
+                                            {{ status }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                <button class="btn btn-action-submit" type="submit" title="Update Status">
+                                    <i class="bi bi-check2"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
