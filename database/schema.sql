@@ -1,3 +1,4 @@
+CREATE DATABASE IF NOT EXISTS food_booking_bot;
 USE food_booking_bot;
 
 CREATE TABLE IF NOT EXISTS students (
@@ -8,29 +9,17 @@ CREATE TABLE IF NOT EXISTS students (
 );
 
 CREATE TABLE IF NOT EXISTS orders (
-
     id INT AUTO_INCREMENT PRIMARY KEY,
-
     customer_phone VARCHAR(20) NOT NULL,
-
     area VARCHAR(100) NOT NULL,
-
     restaurant VARCHAR(100) NOT NULL,
-
     category VARCHAR(100) NOT NULL,
-
     item VARCHAR(150) NOT NULL,
-
     variant VARCHAR(100),
-
     quantity INT NOT NULL,
-
     total DECIMAL(10,2) NOT NULL,
-
     pickup_slot VARCHAR(50) NOT NULL,
-
     booking_reference VARCHAR(36) NULL,
-
     status ENUM(
         'Pending',
         'Preparing',
@@ -38,7 +27,6 @@ CREATE TABLE IF NOT EXISTS orders (
         'Completed',
         'Cancelled'
     ) DEFAULT 'Pending',
-
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

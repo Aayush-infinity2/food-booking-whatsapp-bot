@@ -27,7 +27,15 @@ admin_bp = Blueprint(
 )
 
 
+@admin_bp.route("/")
+def admin_root():
+    if session.get("admin_logged_in"):
+        return redirect(url_for("admin.dashboard"))
+    return redirect(url_for("admin.login"))
+
+
 @admin_bp.route("/login", methods=["GET", "POST"])
+@admin_bp.route("/login/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form.get("username")
@@ -43,6 +51,7 @@ def login():
         flash("Invalid Username or Password")
 
     return render_template("admin/login.html")
+
 
 
 @admin_bp.route("/dashboard")

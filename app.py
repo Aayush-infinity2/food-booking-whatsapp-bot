@@ -37,7 +37,8 @@ app.jinja_env.globals.update(
 app.register_blueprint(orders_bp)
 app.register_blueprint(admin_bp)
 app.register_blueprint(student_bp)
-app.secret_key = os.getenv("SECRET_KEY")
+app.secret_key = os.getenv("SECRET_KEY") or "food_booking_secret_key_default_2026"
+
 @app.route("/")
 def home():
     return "WhatsApp Bot Running 🚀"
